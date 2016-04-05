@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
 	sys.stdout = open('output.txt', 'w')
  
-	with open('jtweets.json', 'r') as tweets_file:
+	with open('jtweets.json', 'r', encoding = 'utf-8') as tweets_file:
 			try:
 				for line in tweets_file:
 					[date, hashtags, timestamp] = parser_jtweet(line)
