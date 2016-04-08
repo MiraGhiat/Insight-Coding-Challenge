@@ -29,9 +29,9 @@ To clarify, a Twitter hashtag graph is a graph connecting all the hashtags that 
 
 We'd like you to implement your own version of this.  However, we don't want this challenge to focus on the relatively uninteresting "dev ops" of connecting to the Twitter API, which can be complicated for some users.  Normally, tweets can be obtained through Twitter's API in JSON format, but you may assume that this has already been done and written to a file named `tweets.txt` inside a directory named `tweet_input`.  
 
-This file `tweets.txt` will contain the actual JSON messages (and the messages emitted by the API about the connection and rate limits, which need to be properly removed from calculations).  `tweets.txt` will have the content of each tweet on a newline:
+This file `jtweets.json` will contain the actual JSON messages (and the messages emitted by the API about the connection and rate limits, which need to be properly removed from calculations).  `jtweets.json` will have the content of each tweet on a newline:
 
-`tweets.txt`: 
+`jtweets.json`: 
 
 	{JSON of first tweet}  
 	{JSON of second tweet}  
@@ -293,7 +293,7 @@ The rolling average degree now becomes
 ## Dealing with tweets which arrive out of order in time
 [Back to Table of Contents](README.md#table-of-contents)
 
-Tweets which are out of order and fall within the 60 sec window of the maximum timestamp processed or in other words, are less than 60 sec older than the maximum timestamp being processed, will create new edges in the graph. However, tweets which are out of order in time and are outside the 60-second window of the maximum timestamp processed (or more than 60 seconds older than the maximum timestamp being processed) should be ignored and such tweets won't contribute to building the graph.  Below is a diagram showing this, with the Nth tweet corresponding to the tweet on the the Nth line of the `tweets.txt` file.
+Tweets which are out of order and fall within the 60 sec window of the maximum timestamp processed or in other words, are less than 60 sec older than the maximum timestamp being processed, will create new edges in the graph. However, tweets which are out of order in time and are outside the 60-second window of the maximum timestamp processed (or more than 60 seconds older than the maximum timestamp being processed) should be ignored and such tweets won't contribute to building the graph.  Below is a diagram showing this, with the Nth tweet corresponding to the tweet on the the Nth line of the `jtweets.json` file.
 
 ![tweet-out-of-order](images/sliding-window.png)
 
@@ -413,7 +413,7 @@ The output should be a file in the `tweet_output` directory named `output.txt` t
 ## Collecting tweets from the Twitter API
 [Back to Table of Contents](README.md#table-of-contents)
 
-Ideally, the updates of the average degree of a Twitter hashtag graph as each tweet arrives would be connected to the Twitter streaming API and would add new tweets to the end of `tweets.txt`.  However, connecting to the API requires more system specific "dev ops" work, which isn't the primary focus for data engineers.  Instead, you should simply assume that each new line of the text file corresponds to a new tweet and design your program to handle a text file with a large number of tweets.  Your program should output the results to a text file named `output.txt` in the `tweet_output` directory.
+Ideally, the updates of the average degree of a Twitter hashtag graph as each tweet arrives would be connected to the Twitter streaming API and would add new tweets to the end of `jtweets.tson`.  However, connecting to the API requires more system specific "dev ops" work, which isn't the primary focus for data engineers.  Instead, you should simply assume that each new line of the text file corresponds to a new tweet and design your program to handle a text file with a large number of tweets.  Your program should output the results to a text file named `output.txt` in the `tweet_output` directory.
 
 
 ## Writing clean, scalable, and well-tested code  
@@ -432,25 +432,16 @@ Alternatively, here is example output of the `tree` command:
 
 	├── README.md 
 	├── run.sh
+	├── data-gen
+	    └── get_jtweet.py
+	    └── jtweets.json
 	├── src
+	    └── output_tweet.py
 	│   └── average_degree.py
 	├── tweet_input
 	│   └── tweets.txt
 	├── tweet_output
-	│   └── output.txt
-	└── insight_testsuite
-	    ├── run_tests.sh
-	    └── tests
-	        └── test-2-tweets-all-distinct
-	        │   ├── tweet_input
-	        │   │   └── tweets.txt
-	        │   └── tweet_output
-	        │       └── output.txt
-	        └── your-own-test
-	            ├── tweet_input
-	            │   └── tweets.txt
-	            └── tweet_output
-	                └── output.txt
+	    └── output.txt
 
 The contents of `src` do not have to contain a single file called "average_degree.py", you are free to include one or more files and name them as you wish.  
 
