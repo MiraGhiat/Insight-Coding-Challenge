@@ -27,7 +27,7 @@ def parser_jtweet(line):
 	tweet = json.loads(line)
 	date = tweet["created_at"]
 	unixtime = tweet['timestamp_ms']
-	hashtags =(tweet["entities"]["hashtags"]["text"])
+	hashtags = tweet["entities"]["hashtags"]["text"]
 	timestamp = [unixtime[i]/1000 for i in range(len(unixtime))]      #from milliseconde to sconde
 	return [date, hashtags, timestamp]
      
@@ -71,9 +71,9 @@ def manipulat_tweet():
 				if len(hashtags) < 1:
 					return 0
 				else: 
-					average_degree += average_degree(hashtag, curenttime, prevtim)
 					sys.stdout.write(str(average_degree(hashtag, curenttime, prevtime)) + "\n")
-			
+					average_degree += average_degree(hashtag, curenttime, prevtim)
+			return average_degree
 			except IOError:
 				print('no data to process', jtweets.json)
 				pass 
