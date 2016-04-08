@@ -5,7 +5,7 @@ import os
 import json
 import re
 import sys
-
+from _future_ import division
 
 sys.path.append('/documents/coding-challenge-master/')
 
@@ -28,7 +28,7 @@ def parser_jtweet(line):
 	date = tweet["created_at"]
 	unixtime = tweet['timestamp_ms']
 	hashtags = tweet["entities"]["hashtags"]["text"]
-	timestamp = [unixtime[i]/1000 for i in range(len(unixtime))]      #from milliseconde to sconde
+	timestamp = [unixtime[i]//1000 for i in range(len(unixtime))]      #from milliseconde to sconde
 	return [date, hashtags, timestamp]
      
 def clean_hashtags(hashtags, date, timestamp):
