@@ -9,9 +9,6 @@ Insight Data Engineering - Coding Challenge
 5. [Maintaining Data within the 60 Second Window](README.md#maintaining-data-within-the-60-second-window)
 6. [Dealing with tweets which arrive out of order in time](README.md#dealing-with-tweets-which-arrive-out-of-order-in-time)
 7. [Collecting tweets from the Twitter API](README.md#collecting-tweets-from-the-twitter-api)
-8. [Writing clean, scalable, and well-tested code](README.md#writing-clean-scalable-and-well-tested-code)
-9. [Testing your directory structure and output format](README.md#testing-your-directory-structure-and-output-format)
-10. [FAQ](README.md#faq)
 
 For this coding challenge, you will develop tools that could help analyze the community of Twitter users.  Some of the challenges here mimic real world problems.
 
@@ -415,61 +412,4 @@ The output should be a file in the `tweet_output` directory named `output.txt` t
 
 Ideally, the updates of the average degree of a Twitter hashtag graph as each tweet arrives would be connected to the Twitter streaming API and would add new tweets to the end of `jtweets.tson`.  However, connecting to the API requires more system specific "dev ops" work, which isn't the primary focus for data engineers.  Instead, you should simply assume that each new line of the text file corresponds to a new tweet and design your program to handle a text file with a large number of tweets.  Your program should output the results to a text file named `output.txt` in the `tweet_output` directory.
 
-
-## Writing clean, scalable, and well-tested code  
-[Back to Table of Contents](README.md#table-of-contents)
-
-As a data engineer, it’s important that you write clean, well-documented code that scales for large amounts of data.  For this reason, it’s important to ensure that your solution works well for a huge number of tweets, rather than just the simple examples above.  For example, your solution should be able to account for a large number of tweets coming in a short period of time, and need to keep up with the input (i.e. need to process a minute of tweets in less than a minute).  It's also important to use software engineering best practices like unit tests, especially since public data is not clean and predictable.  For more details about the implementation, please refer to the FAQ below or email us at cc@insightdataengineering.com
-
-You may write your solution in any mainstream programming language such as C, C++, C#, Clojure, Erlang, Go, Haskell, Java, Python, Ruby, or Scala - then submit a link to a Github repo with your source code.  In addition to the source code, the top-most directory of your repo must include the `tweet_input` and `tweet_output` directories, and a shell script named `run.sh` that compiles and runs the program(s) that implement these features.  If your solution requires additional libraries, environments, or dependencies, you must specify these in your README documentation.  See the figure below for the required structure of the top-most directory in your repo, or simply clone this repo.
-
-## Repo directory structure
-[Back to Table of Contents](README.md#table-of-contents)
-
-![Example Repo Structure](images/directory-pic.png)
-
-Alternatively, here is example output of the `tree` command:
-
-	├── README.md 
-	├── run.sh
-	├── data-gen
-	    └── get_jtweet.py
-	    └── jtweets.json
-	├── src
-	    └── output_tweet.py
-	│   └── average_degree.py
-	├── tweet_input
-	│   └── tweets.txt
-	├── tweet_output
-	    └── output.txt
-
-The contents of `src` do not have to contain a single file called "average_degree.py", you are free to include one or more files and name them as you wish.  
-
-## Testing your directory structure and output format
-[Back to Table of Contents](README.md#table-of-contents)
-
-To make sure that your code has the correct directory structure and the format of the output data in output.txt is correct, we included a test script, called `run_tests.sh` in the insight_testsuite folder.
-
-The tests are stored simply as text files under the `insight_testsuite/tests` folder. Each test should have a separate folder and within should have a `tweet_input` folder for `tweets.txt` and a `tweet_output` folder for `output.txt` corresponding to the current test.
-
-You can run the test with the following from the insight_testsuite folder:
-```bash
-insight_testsuite$ ./run_tests.sh 
-```
-
-The output of `run_tests.sh` should look like:
-```bash
-[FAIL]: test-2-tweets-all-distinct
-[Tue Mar 29 2016 11:59:59] 0 of 1 tests passed
-```
-on failed tests and
-```bash
-[PASS]: test-2-tweets-all-distinct
-[Tue Mar 29 2016 11:59:59] 1 of 1 tests passed
-```
-on success
-
-One test has been provided as a way to check your formatting and simulate how we will be running tests when you submit your solution. We urge you to write your own additional tests here as well as for your own programming language. `run_tests.sh` should alert you if the directory structure is incorrect. 
-
-  **Your submission must pass at least the provided test in order to pass the coding challenge**.  
 
